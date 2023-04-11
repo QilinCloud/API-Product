@@ -12,7 +12,9 @@ The Product describes the details of an item, regardless of the channel used.
 
 * [Documentation](https://documentation.api.qilin.cloud/product/)
 * [Schema](https://documentation.api.qilin.cloud/openapi/product/tag/schema/)
-* [Getting Developer Access](https://documentation.api.qilin.cloud/)
+* [OpenAPI Specification](https://github.com/QilinCloud/API-Product/blob/main/openapi-product.yaml)
+* [Postman Collection](https://github.com/QilinCloud/API-Product/blob/main/postman_collection-product.json)
+* [SDKs](https://github.com/search?q=user%3AQilinCloud+SDK)
 
 
 ## How to provide feedback
