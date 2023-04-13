@@ -11,7 +11,7 @@ assignees: ''
 - [ ] I have searched the existing issues
 
 **Endpoint / method**
-_For example: API-Offer: [Delete] /warehouse/{id}_
+_For example: [Delete] /brands/{id}_
 
 **Describe the bug**
 A clear and concise description of what the bug is.
