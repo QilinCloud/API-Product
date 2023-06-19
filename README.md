@@ -14,7 +14,7 @@ The Product describes the details of an item, regardless of the channel used.
 
 * [Endpoint Documentation](https://documentation.api.qilin.cloud/product/)
 * [OpenAPI Specification](https://github.com/QilinCloud/API-Product/tree/main/openapi-specification)
-* [Postman Collection](https://github.com/QilinCloud/API-Product/blob/main/postman_collection-product.json)
+* [Postman Collection](https://github.com/QilinCloud/API-Product/tree/main/postman-collection)
 * [SDKs](https://github.com/search?q=user%3AQilinCloud+SDK)
 
 
