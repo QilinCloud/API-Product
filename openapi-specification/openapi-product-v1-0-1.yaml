@@ -1,0 +1,4743 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI Document on Azure Functions
+  description: |
+    This is the OpenAPI Document on Azure Functions
+
+    # Authentication
+
+    Qilin offers two forms of authentication:
+      - bearer
+      - api_key
+
+    bearer - an open protocol to allow secure authorization in a simple
+    and standard method from web, mobile and desktop applications.
+
+    <SecurityDefinitions />
+  version: 1.0.1
+  license:
+    name: Qilin
+    url: Qilin.com
+servers:
+  - url: https://apimgmt-qilin-dev.azure-api.net/test/api
+security:
+  - bearer: []
+  - api_key: []
+paths:
+  /brands:
+    post:
+      tags:
+        - Brand
+      summary: Create a brand item
+      operationId: CreateBrand
+      requestBody:
+        description: Brand Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/brandDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_brandDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+    get:
+      tags:
+        - Brand
+      summary: Get list of brand
+      operationId: GetListBrand
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          schema:
+            type: integer
+            format: int32
+        - name: searchString
+          in: query
+          description: Search keywords
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Order by field
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: Order by type
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of filtered brands
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_brandDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+  /brands/{id}:
+    delete:
+      tags:
+        - Brand
+      summary: Delete a brand item
+      operationId: DeleteBrand
+      parameters:
+        - name: id
+          in: path
+          description: The brand identity
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Delete successfully message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+    get:
+      tags:
+        - Brand
+      summary: Get a brand item by id
+      operationId: GetBrandById
+      parameters:
+        - name: id
+          in: path
+          description: The brand identity
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with detail of a brand by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_brandDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+    put:
+      tags:
+        - Brand
+      summary: Update a brand item
+      operationId: UpdateBrand
+      parameters:
+        - name: id
+          in: path
+          description: The brand identity
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Brand Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/brandDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_brandDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+  /brands/list:
+    post:
+      tags:
+        - Brand
+      summary: Get list of brands by externalIds
+      operationId: GetBrandsByExternalIds
+      requestBody:
+        description: List of externalIds of brands
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of products by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_brandDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /categories:
+    post:
+      tags:
+        - Category
+      summary: Create a new category
+      operationId: CreateCategory
+      requestBody:
+        description: Category Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCategoryDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_categoryDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Category
+      summary: Get list of Category
+      operationId: GetCategoryList
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          schema:
+            type: integer
+            format: int32
+        - name: searchString
+          in: query
+          description: Search keywords
+          schema:
+            type: string
+        - name: parentCategoryId
+          in: query
+          description: Parent Category Id
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Order by field
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: Order by type
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of filtered categories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_categoryDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+  /categories/list:
+    post:
+      tags:
+        - Category
+      summary: Get list of categories by externalIds
+      operationId: GetCategoriesByExternalIds
+      requestBody:
+        description: List of externalIds of categories
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of products by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_categoryDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /categories/{id}:
+    put:
+      tags:
+        - Category
+      summary: Update a category
+      operationId: UpdateCategory
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Category Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/categoryBaseDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_categoryDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      tags:
+        - Category
+      summary: Delete a category
+      operationId: DeleteCategory
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Delete successfully message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - Category
+      summary: Get a category by id
+      operationId: GetCategoryById
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response with detail of a category by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_categoryDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /media:
+    post:
+      tags:
+        - Media
+      summary: Create a media file
+      operationId: CreateMedia
+      requestBody:
+        description: Media API Model
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/mediaDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_mediaDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+      x-ms-visibility: important
+  /media/{id}:
+    delete:
+      tags:
+        - Media
+      summary: Delete media by id
+      operationId: DeleteMediaById
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+    get:
+      tags:
+        - Media
+      summary: Get a media file by UUID
+      operationId: GetMediaById
+      parameters:
+        - name: id
+          in: path
+          description: The **UUID** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with detail of a media by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_mediaDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+      x-ms-visibility: important
+    put:
+      tags:
+        - Media
+      summary: Update a media file
+      operationId: UpdateMedia
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Media API Model
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/mediaDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_mediaDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+      x-ms-visibility: important
+  /media/list:
+    post:
+      tags:
+        - Media
+      summary: Get a list of media file by UUID
+      operationId: GetListMediaByIds
+      requestBody:
+        description: List of media UUID
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of media by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_mediaDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+      x-ms-visibility: important
+  /products:
+    post:
+      tags:
+        - Product
+      summary: Create a product item
+      operationId: CreateProduct
+      requestBody:
+        description: Product Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createProductDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_productDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+      x-ms-visibility: important
+    get:
+      tags:
+        - Product
+      summary: Get a list of products
+      operationId: GetProducts
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          schema:
+            type: integer
+            format: int32
+        - name: searchString
+          in: query
+          description: Search keywords
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Order by field
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: Order by type
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Category filter string
+          schema:
+            type: string
+        - name: brand
+          in: query
+          description: Brand filter string
+          schema:
+            type: string
+        - name: tag
+          in: query
+          description: Tag filter string
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language filter
+          schema:
+            type: string
+        - name: isFlat
+          in: header
+          description: Define to response with flat model
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of filtered products
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_productDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /products/{id}:
+    delete:
+      tags:
+        - Product
+      summary: Delete a product
+      operationId: Run
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+    get:
+      tags:
+        - Product
+      summary: Get a product by id
+      operationId: GetProductById
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+        - name: isFlat
+          in: header
+          description: Define to response with flat model
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with detail of a product by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_productDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    head:
+      tags:
+        - Product
+      summary: Get basic info of a product
+      operationId: HeadBasicInfoProduct
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: No description
+        '400':
+          description: Bad request response with detail of errors
+        '500':
+          description: Server error response
+    patch:
+      tags:
+        - Product
+      summary: Delta update a product
+      operationId: PatchProduct
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Delta Update Data Model
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/patchUpdateDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_productDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Product
+      summary: Update a product
+      operationId: UpdateProduct
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Product Data Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/productDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_productDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /products/{id}/info:
+    post:
+      tags:
+        - Product
+      summary: Get list properties of product
+      operationId: GetProductInfo
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+        - name: isFlat
+          in: header
+          description: Define to response with flat model
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: List of properties
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with detail of a product by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_productDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /products/list:
+    post:
+      tags:
+        - Product
+      summary: Get list of product by externalIds
+      operationId: GetProductsByExternalIds
+      parameters:
+        - name: isFlat
+          in: header
+          description: Define to response with flat model
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: List of the productId
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of products by externalIds
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_productDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /get-products:
+    post:
+      tags:
+        - Product
+      summary: Get list of product by ids
+      operationId: GetProductsByListId
+      parameters:
+        - name: isFlat
+          in: header
+          description: Define to response with flat model
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: List of the product identity
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of products by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_productDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /ShippingClassifications:
+    post:
+      tags:
+        - ShippingClassification
+      summary: Create a shipping classification
+      operationId: CreateShippingClassification
+      requestBody:
+        description: ShippingClassification Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createShippingClassificationDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_shippingClassificationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - ShippingClassification
+      summary: Get list of shipping classification
+      operationId: GetShippingClassificationList
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          schema:
+            type: integer
+            format: int32
+        - name: searchString
+          in: query
+          description: Search keywords
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Order by field
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: Order by type
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of filtered shipping classification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_shippingClassificationDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /ShippingClassifications/{id}:
+    delete:
+      tags:
+        - ShippingClassification
+      summary: Delete a shipping classification
+      operationId: DeleteShippingClassification
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - ShippingClassification
+      summary: Get detail of shipping classification by id
+      operationId: GetShippingClassificationDetail
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with detail of a shipping classification by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_shippingClassificationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - ShippingClassification
+      summary: Update a shipping classification
+      operationId: UpdateShippingClassification
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: ShippingClassification Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/shippingClassificationDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_shippingClassificationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /shippingclassifications/list:
+    post:
+      tags:
+        - ShippingClassification
+      summary: Get list of shippingclassifications by externalIds
+      operationId: GetShippingClassificationsByExternalIds
+      requestBody:
+        description: List of externalIds of shippingclassifications
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of products by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_shippingClassificationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /variations/list:
+    post:
+      tags:
+        - Variation
+      summary: Get list of variations by externalIds
+      operationId: GetVariationsByExternalIds
+      requestBody:
+        description: List of externalIds of variations
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of products by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_variationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /VariationKeys:
+    post:
+      tags:
+        - VariationKey
+      summary: Create a new variation key
+      operationId: CreateVariationKey
+      requestBody:
+        description: VariationKey Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/variationKeyDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_variationKeyDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - VariationKey
+      summary: Get list of variation key
+      operationId: GetVariationKeyList
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          schema:
+            type: integer
+            format: int32
+        - name: orderBy
+          in: query
+          description: Order by field
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: Order by type
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of filtered variation key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_variationKeyDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+  /VariationKeys/{id}:
+    delete:
+      tags:
+        - VariationKey
+      summary: Delete a variation key
+      operationId: DeleteVariationKey
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The OK response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    get:
+      tags:
+        - VariationKey
+      summary: Get a variation key by id
+      operationId: GetVariationKeyById
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with detail of a variation key by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_variationKeyDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - VariationKey
+      summary: Update a variation
+      operationId: UpdateVariationKey
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: VariationKey Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/variationKeyDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_variationKeyDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /variationKeys/list:
+    post:
+      tags:
+        - VariationKey
+      summary: Get list of variation keys by externalIds
+      operationId: GetVariationKeysByExternalIds
+      requestBody:
+        description: List of externalIds of variation keys
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of products by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_variationKeyDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+          content:
+            application/json:
+              schema:
+                type: string
+  /variations:
+    post:
+      tags:
+        - Variation
+      summary: Create a new variation
+      operationId: CreateVariation
+      requestBody:
+        description: Category Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/variationDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_variationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+  /variations/{id}:
+    delete:
+      tags:
+        - Variation
+      summary: Delete a variation
+      operationId: DeleteVariation
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Delete successfully message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+    get:
+      tags:
+        - Variation
+      summary: Get a  variation by UUID
+      operationId: GetVariationById
+      parameters:
+        - name: id
+          in: path
+          description: The **UUID** parameter
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with detail of a variation by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_variationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+      x-ms-visibility: important
+    put:
+      tags:
+        - Variation
+      summary: Update a variation
+      operationId: UpdateVariation
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Category Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/variationDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_variationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+  /internal/variations/list:
+    post:
+      tags:
+        - Variation
+      summary: Get a list of variation file by UUID
+      operationId: GetListVariationByIds
+      requestBody:
+        description: List of variation UUID
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Successful response with list of variations by ids
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getByIdsResponseDto_variationDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+      x-ms-visibility: important
+  /attributes:
+    post:
+      tags:
+        - Attribute
+      summary: Create a new attribute Test
+      operationId: CreateAttribute
+      requestBody:
+        description: Attribute Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/attributeDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with created object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_attributeDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+    get:
+      tags:
+        - Attribute
+      summary: Get list of Attribute
+      operationId: GetAttributeList
+      parameters:
+        - name: pageIndex
+          in: query
+          description: The index of the page
+          schema:
+            type: integer
+            format: int32
+        - name: pageSize
+          in: query
+          description: Total items of per page
+          schema:
+            type: integer
+            format: int32
+        - name: searchString
+          in: query
+          description: Search keywords
+          schema:
+            type: string
+        - name: group
+          in: query
+          description: Group
+          schema:
+            type: string
+        - name: usageFor
+          in: query
+          description: Usage For
+          schema:
+            type: string
+        - name: dataType
+          in: query
+          description: Attribute data type
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: Order by field
+          schema:
+            type: string
+        - name: orderType
+          in: query
+          description: Order by type
+          schema:
+            type: string
+        - name: Accept-Language
+          in: header
+          description: Language
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with list of filtered attributes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_attributeDetailDto[]'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+      x-ms-visibility: important
+  /attributes/{id}:
+    delete:
+      tags:
+        - Attribute
+      summary: Delete an attribute
+      operationId: DeleteAttribute
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Delete successfully message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_object'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+    get:
+      tags:
+        - Attribute
+      summary: Get the detail of attribute by id
+      operationId: GetAttributeById
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful response with detail of a attribute by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_attributeDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+    put:
+      tags:
+        - Attribute
+      summary: Update an attribute
+      operationId: UpdateAttribute
+      parameters:
+        - name: id
+          in: path
+          description: The **Id** parameter
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Attribute Model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/attributeDto'
+        required: true
+      responses:
+        '200':
+          description: Successful response with updated object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/successResponse_attributeDetailDto'
+        '400':
+          description: Bad request response with detail of errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/badRequestExceptionModel'
+        '500':
+          description: Server error response
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      description: |
+        Use this [link](https://qilindev.b2clogin.com/qilindev.onmicrosoft.com/oauth2/v2.0/authorize?p=B2C_1_SIGNIN_TEST&client_id=ef526441-11da-42c3-9219-93b8a8d4c953&nonce=defaultNonce&redirect_uri=https%3A%2F%2Fjwt.ms&scope=openid&response_type=id_token&prompt=login) to login and get the JWT
+      scheme: bearer
+    api_key:
+      type: apiKey
+      in: header
+      name: x-api-key
+  schemas:
+    noteDetailDto:
+      type: object
+      properties:
+        noteTypeText:
+          type: string
+          description: The type of the note.
+          nullable: true
+        createdDate:
+          type: string
+          description: The date when this annotation was created.
+          format: date-time
+          nullable: true
+        content:
+          type: object
+          additionalProperties:
+            type: string
+          description: The content of the note.
+        noteType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: The type of the note.
+          format: int32
+          nullable: true
+    addressDetailDto:
+      type: object
+      properties:
+        addressTypeName:
+          type: string
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDetailDto'
+          description: Notes about this address.
+          nullable: true
+        street:
+          type: string
+        houseNumber:
+          type: string
+        building:
+          type: string
+        level:
+          type: string
+        room:
+          type: string
+        additionalAddressInformation:
+          type: string
+          description: Further address additional information
+          nullable: true
+        entryCode:
+          type: string
+        zip:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          description: Country in ISO 3166 ALPHA 3 format
+          nullable: true
+        addressType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+          type: integer
+          description: |-
+            Value<br/>
+                                0 : MerchantAddress<br/>
+                                1 : InvoiceAddress<br/>
+                                2 : DeliveryAddress<br/>
+                                3 : PickupAddress<br/>
+                                4 : FulfillerAddress<br/>
+                                5 : ProductAddress<br/>
+                                6 : BrandAddress<br/>
+                                7 : ManufacturerAddress<br/>
+                                8 : WarehouseAddress<br/>
+                                9 : CustomerAddress<br/>
+                                10 : RetourAddress<br/>
+                                11 : VendorAddress<br/>
+                                12 : Other<br/>
+          format: int32
+        chanelId:
+          type: string
+          description: Reference to the ID of the customer used by the marketplace itself for API actions
+          nullable: true
+        erpId:
+          type: string
+          description: Reference to the ID of the ERP system that the retailer uses.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this address
+    brandDetailDto:
+      required:
+        - title
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new brand.
+        updatedDate:
+          type: string
+          description: The latest update time of this brand.
+          format: date-time
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDetailDto'
+          description: The addresses
+          nullable: true
+        brandId:
+          type: string
+          description: The externalId defined outside Qilin
+        sourceId:
+          type: string
+          description: The Id of input channel, where data goes from.
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the brand
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        urLs:
+          type: array
+          items:
+            type: string
+          description: A list of URLs related to this brand
+          nullable: true
+        emails:
+          type: array
+          items:
+            type: string
+          description: A list of email addresses for this brand
+          nullable: true
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the brand
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    pagination:
+      type: object
+      properties:
+        pageSize:
+          type: integer
+          format: int32
+        pageIndex:
+          type: integer
+          format: int32
+        totalItem:
+          type: integer
+          format: int32
+        self:
+          type: string
+        first:
+          type: string
+        prev:
+          type: string
+        next:
+          type: string
+        last:
+          type: string
+    successResponse_brandDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/brandDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    list_object:
+      type: array
+      items:
+        type: object
+    qilinError:
+      type: object
+      properties:
+        errorCode:
+          enum:
+            - 5010
+            - 5020
+            - 5030
+            - 5040
+            - 6010
+            - 6011
+            - 6012
+            - 6013
+            - 6014
+            - 7000
+            - 7010
+            - 7011
+            - 7020
+            - 7030
+            - 7040
+            - 7050
+            - 7060
+            - 7070
+            - 7080
+            - 7090
+            - 7100
+            - 7110
+            - 7120
+            - 7130
+            - 7140
+            - 7150
+            - 7160
+            - 7170
+            - 7180
+            - 7190
+            - 7200
+            - 7210
+            - 7220
+            - 7230
+            - 8000
+            - 8001
+            - 8002
+            - 8003
+            - 8010
+            - 8011
+            - 8012
+            - 8013
+            - 8014
+            - 8015
+            - 8016
+            - 8017
+            - 8018
+            - 8030
+            - 8031
+            - 8032
+            - 8033
+            - 8034
+            - 8035
+            - 8036
+            - 8037
+            - 8060
+            - 8061
+            - 8062
+            - 9000
+            - 9001
+            - 9002
+            - 9003
+            - 9004
+            - 9005
+            - 9006
+            - 9007
+            - 9008
+            - 9009
+            - 9010
+            - 9011
+            - 9012
+            - 9013
+            - 9020
+            - 9030
+            - 9040
+            - 9041
+            - 9050
+            - 9060
+            - 9070
+            - 9071
+            - 9072
+            - 9073
+            - 9075
+            - 9076
+            - 9077
+            - 9078
+            - 9079
+            - 9080
+            - 9081
+            - 9082
+            - 9083
+            - 9084
+            - 9085
+            - 9086
+            - 9087
+            - 9088
+            - 9089
+            - 9090
+            - 9091
+            - 9092
+            - 9093
+            - 9094
+            - 9101
+            - 9102
+            - 9103
+            - 9104
+            - 9105
+            - 9106
+            - 9107
+            - 9108
+            - 9109
+            - 9110
+            - 9111
+            - 9112
+            - 9113
+            - 9114
+            - 9115
+            - 9116
+            - 9117
+            - 9201
+            - 9202
+            - 9203
+            - 9204
+            - 9301
+            - 9302
+            - 9303
+            - 9304
+            - 9305
+            - 9306
+            - 9307
+            - 9308
+            - 9309
+            - 9310
+            - 9311
+            - 9312
+            - 9313
+            - 9314
+            - 9315
+            - 9316
+            - 9317
+            - 9318
+            - 9319
+            - 10000
+            - 10001
+            - 10002
+            - 10003
+            - 10004
+            - 10005
+            - 10006
+            - 10007
+            - 10008
+            - 10009
+            - 10011
+            - 10012
+            - 10013
+            - 10014
+            - 10015
+            - 10020
+            - 10021
+            - 10023
+            - 10024
+            - 10025
+            - 10026
+            - 10027
+            - 10028
+            - 10029
+            - 10030
+            - 10031
+            - 10032
+            - 10033
+            - 10034
+            - 10035
+            - 10036
+            - 10037
+            - 10038
+            - 10039
+            - 10043
+            - 10044
+            - 10045
+            - 10046
+            - 10047
+            - 10048
+            - 10049
+            - 10050
+            - 10051
+            - 10052
+            - 10053
+            - 10054
+            - 10055
+            - 10056
+            - 10057
+            - 10058
+            - 10059
+            - 10070
+            - 10071
+            - 10072
+            - 10073
+            - 10074
+            - 10075
+            - 10076
+            - 10077
+            - 10078
+            - 10079
+            - 10080
+            - 10081
+            - 30000
+            - 30001
+            - 30002
+            - 30003
+            - 30004
+            - 30005
+            - 30020
+            - 30030
+            - 30035
+            - 30037
+            - 30040
+            - 30050
+            - 30060
+            - 30100
+            - 30110
+            - 30115
+            - 30118
+            - 30119
+            - 30120
+            - 30121
+            - 30122
+            - 30123
+            - 30124
+            - 30125
+            - 30126
+            - 50000
+            - 50001
+            - 50002
+            - 50003
+            - 50004
+            - 50005
+            - 50006
+            - 50007
+            - 50008
+            - 50009
+            - 50010
+            - 50011
+            - 50012
+            - 50013
+            - 50014
+            - 50015
+            - 70000
+            - 70001
+            - 70002
+            - 70003
+            - 70004
+            - 70010
+            - 70011
+            - 70012
+            - 70013
+            - 70014
+            - 70015
+            - 70016
+            - 70017
+            - 70018
+            - 70019
+            - 70020
+            - 70021
+            - 70022
+            - 70023
+            - 70024
+            - 70025
+            - 70026
+            - 70027
+            - 70028
+            - 70029
+            - 70030
+            - 70031
+            - 70032
+            - 70033
+            - 70034
+            - 70035
+            - 70036
+            - 70037
+            - 70038
+            - 70039
+            - 70040
+            - 70041
+            - 70042
+            - 70043
+            - 70044
+            - 70045
+            - 70050
+            - 70051
+            - 70052
+            - 70100
+            - 70101
+            - 70102
+            - 70103
+            - 70104
+            - 70105
+            - 70106
+            - 70120
+            - 70121
+            - 70122
+            - 70123
+            - 70124
+            - 70125
+            - 70126
+            - 70127
+            - 70128
+            - 70129
+            - 70130
+            - 70131
+            - 70132
+            - 70133
+            - 70134
+            - 70135
+            - 90000
+            - 90001
+            - 100040
+            - 100041
+            - 100042
+          type: integer
+          format: int32
+          default: 5010
+        shortDescription:
+          type: string
+        description:
+          type: string
+        moreInformationUrl:
+          type: string
+          format: uri
+        referenceTo:
+          type: string
+        errorType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          format: int32
+          default: 0
+        additionalInformation:
+          type: string
+        options:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/list_object'
+    badRequestExceptionModel:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/qilinError'
+        creationTime:
+          type: string
+          format: date-time
+        correlationId:
+          type: string
+        requestAPI:
+          type: string
+        requestHttpVerb:
+          type: string
+        requestParameters:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/list_object'
+        requestBody:
+          type: string
+    noteDto:
+      type: object
+      properties:
+        content:
+          type: object
+          additionalProperties:
+            type: string
+          description: The content of the note.
+        noteType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: The type of the note.
+          format: int32
+          nullable: true
+    addressDto:
+      type: object
+      properties:
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/noteDto'
+          description: Notes about this address.
+          nullable: true
+        street:
+          type: string
+        houseNumber:
+          type: string
+        building:
+          type: string
+        level:
+          type: string
+        room:
+          type: string
+        additionalAddressInformation:
+          type: string
+          description: Further address additional information
+          nullable: true
+        entryCode:
+          type: string
+        zip:
+          type: string
+        city:
+          type: string
+        district:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+          description: Country in ISO 3166 ALPHA 3 format
+          nullable: true
+        addressType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+          type: integer
+          description: |-
+            Value<br/>
+                                0 : MerchantAddress<br/>
+                                1 : InvoiceAddress<br/>
+                                2 : DeliveryAddress<br/>
+                                3 : PickupAddress<br/>
+                                4 : FulfillerAddress<br/>
+                                5 : ProductAddress<br/>
+                                6 : BrandAddress<br/>
+                                7 : ManufacturerAddress<br/>
+                                8 : WarehouseAddress<br/>
+                                9 : CustomerAddress<br/>
+                                10 : RetourAddress<br/>
+                                11 : VendorAddress<br/>
+                                12 : Other<br/>
+          format: int32
+        chanelId:
+          type: string
+          description: Reference to the ID of the customer used by the marketplace itself for API actions
+          nullable: true
+        erpId:
+          type: string
+          description: Reference to the ID of the ERP system that the retailer uses.
+          nullable: true
+        options:
+          type: object
+          additionalProperties:
+            type: object
+          description: A list of additional options to this address
+    brandDto:
+      required:
+        - title
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/addressDto'
+          description: The addresses
+          nullable: true
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the brand
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        urLs:
+          type: array
+          items:
+            type: string
+          description: A list of URLs related to this brand
+          nullable: true
+        emails:
+          type: array
+          items:
+            type: string
+          description: A list of email addresses for this brand
+          nullable: true
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the brand
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_brandDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/brandDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    successResponse_object:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: object
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    getByIdsBodyResponseDto_brandDetailDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/brandDetailDto'
+        messages:
+          type: array
+          items:
+            type: string
+    getByIdsResponseDto_brandDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/getByIdsBodyResponseDto_brandDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    iEnumerable_string:
+      type: array
+      items:
+        type: string
+    categoryDetailDto:
+      required:
+        - title
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new category.
+        categoryId:
+          type: string
+          description: The externalId defined outside Qilin
+        updatedDate:
+          type: string
+          description: The latest update time of this category.
+          format: date-time
+        sourceId:
+          type: string
+          description: The Id of input channel, where data goes from.
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The title of the merchant category
+        parentCategory:
+          type: string
+          description: A reference to the UUID of a parent category.
+          format: uuid
+          nullable: true
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the merchant category
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_categoryDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/categoryDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    createCategoryDto:
+      required:
+        - categoryId
+        - sourceId
+        - title
+      type: object
+      properties:
+        categoryId:
+          minLength: 1
+          type: string
+          description: The externalId defined outside Qilin
+        sourceId:
+          minLength: 1
+          type: string
+          description: The Id of input channel, where data goes from.
+          example: sourceId-1
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The title of the merchant category
+        parentCategory:
+          type: string
+          description: A reference to the UUID of a parent category.
+          format: uuid
+          nullable: true
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+          example: 10
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the merchant category
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+          example: hash-1
+    successResponse_categoryDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/categoryDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    getByIdsBodyResponseDto_categoryDetailDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/categoryDetailDto'
+        messages:
+          type: array
+          items:
+            type: string
+    getByIdsResponseDto_categoryDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/getByIdsBodyResponseDto_categoryDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    categoryBaseDto:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The title of the merchant category
+        parentCategory:
+          type: string
+          description: A reference to the UUID of a parent category.
+          format: uuid
+          nullable: true
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the merchant category
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    mediaDto:
+      required:
+        - mediaType
+        - mediaExtension
+        - sourceId
+      type: object
+      properties:
+        mediaTitle:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the media file
+        subscriptionId:
+          type: string
+        mediaType:
+          minLength: 1
+          type: string
+          description: The media type of the media file
+          nullable: true
+        mediaExtension:
+          minLength: 1
+          type: string
+          description: The file extension
+          nullable: true
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        deepLink:
+          type: string
+          description: The URL to this media file
+          nullable: true
+        fileName:
+          type: string
+          description: The name of uploaded file
+          nullable: true
+        mediaFileData:
+          type: string
+          description: The media file data as Byte[]
+          format: binary
+          nullable: true
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        sourceId:
+          minLength: 1
+          type: string
+          description: The Id of input channel, where data goes from.
+    mediaDetailDto:
+      required:
+        - mediaType
+        - mediaExtension
+        - sourceId
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new media.
+        updatedDate:
+          type: string
+          description: The latest update time of this media.
+          format: date-time
+        mediaTitle:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the media file
+        subscriptionId:
+          type: string
+        mediaType:
+          minLength: 1
+          type: string
+          description: The media type of the media file
+          nullable: true
+        mediaExtension:
+          minLength: 1
+          type: string
+          description: The file extension
+          nullable: true
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        deepLink:
+          type: string
+          description: The URL to this media file
+          nullable: true
+        fileName:
+          type: string
+          description: The name of uploaded file
+          nullable: true
+        mediaFileData:
+          type: string
+          description: The media file data as Byte[]
+          format: binary
+          nullable: true
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        sourceId:
+          minLength: 1
+          type: string
+          description: The Id of input channel, where data goes from.
+    successResponse_mediaDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/mediaDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    getByIdsBodyResponseDto_mediaDetailDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/mediaDetailDto'
+        messages:
+          type: array
+          items:
+            type: string
+    getByIdsResponseDto_mediaDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/getByIdsBodyResponseDto_mediaDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    productBaseInfo:
+      type: object
+      properties:
+        GTINs:
+          type: array
+          items:
+            type: string
+          description: A list of EANs (GTIN is the correct name for what is popularly known as EAN). Does not have to be unique (e.g. because of different states).
+          nullable: true
+        SKUs:
+          type: array
+          items:
+            type: string
+          description: A list of SKUs. Doesn't have to be unique (e.g. because ERPs like Shopify also allow it)
+          nullable: true
+        brandId:
+          type: string
+          description: Reference to the UUID of a brand created via API
+          nullable: true
+        MPNs:
+          type: array
+          items:
+            type: string
+          description: Manufacturer Product Number
+          nullable: true
+      description: Product base information (GTIN, SKU, Brand, MPN)
+    productTextInfo:
+      type: object
+      properties:
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The title of a product'
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The description of a product'
+        shortDescription:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The short description, often also called "subtitle".'
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of Tags
+          nullable: true
+      description: Text information of product (Title, Description, Short description, Tag)
+    productMetaInfo:
+      type: object
+      properties:
+        deepLinks:
+          type: array
+          items:
+            type: string
+          description: ' The URL to this product in a retailer''s shop (or a list if the retailer has multiple shops).'
+          nullable: true
+      description: Meta information of product (CreationTime, LastUpdateTime, DeepLink)
+    productSeo:
+      type: object
+      properties:
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+      description: SEO Information (title, keyword, description)
+    money:
+      required:
+        - amountInFractionalUnit
+        - currency
+      type: object
+      properties:
+        amountInFractionalUnit:
+          type: integer
+          description: A value in the smallest unit of the currency. So for the currency euro then the value in cents, for the currency Swiss franc, then the value in centimes, etc.. Always net.
+          format: int32
+        currency:
+          minLength: 1
+          type: string
+          description: The currency in ISO 4217 (Iso3) format.
+      description: Manufacturer's Suggested Retail Price
+    productDto:
+      type: object
+      properties:
+        GTINs:
+          type: array
+          items:
+            type: string
+          description: A list of EANs (GTIN is the correct name for what is popularly known as EAN). Does not have to be unique (e.g. because of different states).
+          nullable: true
+        SKUs:
+          type: array
+          items:
+            type: string
+          description: A list of SKUs. Doesn't have to be unique (e.g. because ERPs like Shopify also allow it)
+          nullable: true
+        brandId:
+          type: string
+          description: Reference to the id of a brand created via API
+          nullable: true
+        MPNs:
+          type: array
+          items:
+            type: string
+          description: Manufacturer Product Number
+          nullable: true
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The title of a product'
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The description of a product'
+        shortDescription:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The short description, often also called "subtitle".'
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of Tags
+          nullable: true
+        deepLinks:
+          type: array
+          items:
+            type: string
+          description: The URL to this product in a retailer's shop (or a list if the retailer has multiple shops).
+          nullable: true
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+          description: Title of SEO
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+          description: Keyword of SEO
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of SEO
+        length:
+          type: number
+          description: Length in cm
+          format: double
+          nullable: true
+        width:
+          type: number
+          description: Width in cm
+          format: double
+          nullable: true
+        height:
+          type: number
+          description: Height in cm
+          format: double
+          nullable: true
+        weightNet:
+          type: integer
+          description: The net weight of the item in grams
+          format: int32
+          nullable: true
+        weightGross:
+          type: integer
+          description: The shipping weight (i.e. the net weight of the article + the weight of the packaging) in grams.
+          format: int32
+          nullable: true
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        variationIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the id of a variant expression
+          nullable: true
+        variationGroupId:
+          type: string
+          description: An ID with which all variants of one and the same article are summarized
+          nullable: true
+        categoryIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the id of a merchant category
+          nullable: true
+        shippingClassificationId:
+          type: string
+          description: Reference to the Id of a shipping class
+          nullable: true
+        productGroup:
+          type: object
+          additionalProperties:
+            type: string
+          description: The type of goods to which this product belongs
+        crossSellingIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the Id of a product
+          nullable: true
+        ISBNs:
+          type: array
+          items:
+            type: string
+          description: International Standard Book Number
+          nullable: true
+        ASINs:
+          type: array
+          items:
+            type: string
+          description: Amazon Standard Identification Number
+          nullable: true
+        hazardCodes:
+          type: array
+          items:
+            type: string
+          description: The hazard number according to the UN catalog of hazardous substances
+          nullable: true
+        TARICs:
+          type: array
+          items:
+            type: string
+          description: The TARIC(TARif IntÃ©grÃ© Communautaire) code for customs regulations
+          nullable: true
+        countryOfOrigin:
+          type: string
+          description: The country of origin of the goods in ISO 3166 ALPHA-3 format.
+          nullable: true
+        MSRP:
+          $ref: '#/components/schemas/money'
+        unit:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+          type: integer
+          description: |-
+            The unit of the product.<br/>
+                            Value:<br/>
+                            0 : Ml<br/>
+                            1 : Cl<br/>
+                            2 : Dl<br/>
+                            3 : L<br/>
+                            4 : Mg<br/>
+                            5 : G<br/>
+                            6 : Kg<br/>
+                            7 : Mm<br/>
+                            8 : Cm<br/>
+                            9 : Dm<br/>
+                            10 : M<br/>
+                            11 : Km<br/>
+                            12 : Sqmm<br/>
+                            13 : Sqcm<br/>
+                            14 : Sqdm<br/>
+                            15 : Sqm<br/>
+                            16 : Cbmm<br/>
+                            17 : Cbcm<br/>
+                            18 : Cbdm<br/>
+                            19 : Cbm<br/>
+                            20 : Pc<br/>
+                            21 : Yard<br/>
+                            22 : Oz<br/>
+                            23 : Lbs<br/>
+                            24 : Floz<br/>
+                            25 : Gal<br/>
+                            26 : Inch<br/>
+                            27 : Foot<br/>
+                            28 : Pound<br/>
+                            29 : Ton
+          format: int32
+          nullable: true
+        container:
+          type: string
+          description: The container
+          nullable: true
+        basePriceReferenceVolume:
+          type: number
+          description: The reference quantity for calculating the basic price.
+          format: double
+          nullable: true
+        basePriceReferenceUnit:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+          type: integer
+          description: |-
+            The reference unit for calculating the basic price.<br/>
+                            Value:<br/>
+                            0 : Ml<br/>
+                            1 : Cl<br/>
+                            2 : Dl<br/>
+                            3 : L<br/>
+                            4 : Mg<br/>
+                            5 : G<br/>
+                            6 : Kg<br/>
+                            7 : Mm<br/>
+                            8 : Cm<br/>
+                            9 : Dm<br/>
+                            10 : M<br/>
+                            11 : Km<br/>
+                            12 : Sqmm<br/>
+                            13 : Sqcm<br/>
+                            14 : Sqdm<br/>
+                            15 : Sqm<br/>
+                            16 : Cbmm<br/>
+                            17 : Cbcm<br/>
+                            18 : Cbdm<br/>
+                            19 : Cbm<br/>
+                            20 : Pc<br/>
+                            21 : Yard<br/>
+                            22 : Oz<br/>
+                            23 : Lbs<br/>
+                            24 : Floz<br/>
+                            25 : Gal<br/>
+                            26 : Inch<br/>
+                            27 : Foot<br/>
+                            28 : Pound<br/>
+                            29 : Ton
+          format: int32
+          nullable: true
+        minimumPurchaseQuantity:
+          type: number
+          description: The minimum purchase
+          format: double
+          nullable: true
+        purchaseQuantity:
+          type: number
+          description: The acceptance interval
+          format: double
+          nullable: true
+        condition:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: |-
+            The condition of a product.<br/>
+                                            Value:<br/>
+                                            0 : New<br/>
+                                            1 : AsNew<br/>
+                                            2 : VeryGood<br/>
+                                            3 : Good<br/>
+                                            4 : Acceptable<br/>
+                                            5 : Antique<br/>
+                                            6 : Broken<br/>
+                                            7 : Refurbished<br/>
+                                            8 : BStock<br/>
+                                            9 : DamagedPackaging<br/>
+                                            10 : Demo<br/>
+                                            11 : AccordingToDescription<br/>
+                                            12 : Incomplete<br/>
+                                            13 : Unknown<br/>
+          format: int32
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        productStatus:
+          type: string
+          description: The status of product
+          nullable: true
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    productVariationInfo:
+      type: object
+      properties:
+        variationIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the id of a variant expression
+          nullable: true
+        variationGroupId:
+          type: string
+          description: An ID with which all variants of one and the same article are summarized
+          nullable: true
+      description: Variation information of product
+    productCategorizationInfo:
+      type: object
+      properties:
+        categoryIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the UUID of a merchant category
+          nullable: true
+        shippingClassificationId:
+          type: string
+          description: Reference to the Id of a shipping class
+          nullable: true
+        productGroup:
+          type: object
+          additionalProperties:
+            type: string
+          description: The type of goods to which this product belongs
+      description: Categorization of product
+    productDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new product.
+        productId:
+          type: string
+          description: The externalId defined outside Qilin
+        base:
+          $ref: '#/components/schemas/productBaseInfo'
+        text:
+          $ref: '#/components/schemas/productTextInfo'
+        meta:
+          $ref: '#/components/schemas/productMetaInfo'
+        seo:
+          $ref: '#/components/schemas/productSeo'
+        dimension:
+          $ref: '#/components/schemas/productDto'
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        variation:
+          $ref: '#/components/schemas/productVariationInfo'
+        categorization:
+          $ref: '#/components/schemas/productCategorizationInfo'
+        other:
+          $ref: '#/components/schemas/productDto'
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        updatedDate:
+          type: string
+          description: Date and time in Unix Timestamp Format (UTC) when the product was last updated.
+          format: date-time
+        productStatus:
+          type: string
+          description: The status of product
+          nullable: true
+        updatedDateExternal:
+          type: string
+          description: The updated date external
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+          description: The hashvalue to compare data
+          nullable: true
+        sourceId:
+          type: string
+          description: The Id of input channel, where data goes from.
+    successResponse_productDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/productDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    createProductDto:
+      required:
+        - sourceId
+      type: object
+      properties:
+        productId:
+          type: string
+          description: The externalId defined outside Qilin
+        sourceId:
+          minLength: 1
+          type: string
+          description: The Id of input channel, where data goes from.
+        GTINs:
+          type: array
+          items:
+            type: string
+          description: A list of EANs (GTIN is the correct name for what is popularly known as EAN). Does not have to be unique (e.g. because of different states).
+          nullable: true
+        SKUs:
+          type: array
+          items:
+            type: string
+          description: A list of SKUs. Doesn't have to be unique (e.g. because ERPs like Shopify also allow it)
+          nullable: true
+        brandId:
+          type: string
+          description: Reference to the id of a brand created via API
+          nullable: true
+        MPNs:
+          type: array
+          items:
+            type: string
+          description: Manufacturer Product Number
+          nullable: true
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The title of a product'
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The description of a product'
+        shortDescription:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The short description, often also called "subtitle".'
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of Tags
+          nullable: true
+        deepLinks:
+          type: array
+          items:
+            type: string
+          description: The URL to this product in a retailer's shop (or a list if the retailer has multiple shops).
+          nullable: true
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+          description: Title of SEO
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+          description: Keyword of SEO
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of SEO
+        length:
+          type: number
+          description: Length in cm
+          format: double
+          nullable: true
+        width:
+          type: number
+          description: Width in cm
+          format: double
+          nullable: true
+        height:
+          type: number
+          description: Height in cm
+          format: double
+          nullable: true
+        weightNet:
+          type: integer
+          description: The net weight of the item in grams
+          format: int32
+          nullable: true
+        weightGross:
+          type: integer
+          description: The shipping weight (i.e. the net weight of the article + the weight of the packaging) in grams.
+          format: int32
+          nullable: true
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        variationIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the id of a variant expression
+          nullable: true
+        variationGroupId:
+          type: string
+          description: An ID with which all variants of one and the same article are summarized
+          nullable: true
+        categoryIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the id of a merchant category
+          nullable: true
+        shippingClassificationId:
+          type: string
+          description: Reference to the Id of a shipping class
+          nullable: true
+        productGroup:
+          type: object
+          additionalProperties:
+            type: string
+          description: The type of goods to which this product belongs
+        crossSellingIds:
+          type: array
+          items:
+            type: string
+          description: A list full of references to the Id of a product
+          nullable: true
+        ISBNs:
+          type: array
+          items:
+            type: string
+          description: International Standard Book Number
+          nullable: true
+        ASINs:
+          type: array
+          items:
+            type: string
+          description: Amazon Standard Identification Number
+          nullable: true
+        hazardCodes:
+          type: array
+          items:
+            type: string
+          description: The hazard number according to the UN catalog of hazardous substances
+          nullable: true
+        TARICs:
+          type: array
+          items:
+            type: string
+          description: The TARIC(TARif IntÃ©grÃ© Communautaire) code for customs regulations
+          nullable: true
+        countryOfOrigin:
+          type: string
+          description: The country of origin of the goods in ISO 3166 ALPHA-3 format.
+          nullable: true
+        MSRP:
+          $ref: '#/components/schemas/money'
+        unit:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+          type: integer
+          description: |-
+            The unit of the product.<br/>
+                            Value:<br/>
+                            0 : Ml<br/>
+                            1 : Cl<br/>
+                            2 : Dl<br/>
+                            3 : L<br/>
+                            4 : Mg<br/>
+                            5 : G<br/>
+                            6 : Kg<br/>
+                            7 : Mm<br/>
+                            8 : Cm<br/>
+                            9 : Dm<br/>
+                            10 : M<br/>
+                            11 : Km<br/>
+                            12 : Sqmm<br/>
+                            13 : Sqcm<br/>
+                            14 : Sqdm<br/>
+                            15 : Sqm<br/>
+                            16 : Cbmm<br/>
+                            17 : Cbcm<br/>
+                            18 : Cbdm<br/>
+                            19 : Cbm<br/>
+                            20 : Pc<br/>
+                            21 : Yard<br/>
+                            22 : Oz<br/>
+                            23 : Lbs<br/>
+                            24 : Floz<br/>
+                            25 : Gal<br/>
+                            26 : Inch<br/>
+                            27 : Foot<br/>
+                            28 : Pound<br/>
+                            29 : Ton
+          format: int32
+          nullable: true
+        container:
+          type: string
+          description: The container
+          nullable: true
+        basePriceReferenceVolume:
+          type: number
+          description: The reference quantity for calculating the basic price.
+          format: double
+          nullable: true
+        basePriceReferenceUnit:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+            - 15
+            - 16
+            - 17
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 24
+            - 25
+            - 26
+            - 27
+            - 28
+            - 29
+          type: integer
+          description: |-
+            The reference unit for calculating the basic price.<br/>
+                            Value:<br/>
+                            0 : Ml<br/>
+                            1 : Cl<br/>
+                            2 : Dl<br/>
+                            3 : L<br/>
+                            4 : Mg<br/>
+                            5 : G<br/>
+                            6 : Kg<br/>
+                            7 : Mm<br/>
+                            8 : Cm<br/>
+                            9 : Dm<br/>
+                            10 : M<br/>
+                            11 : Km<br/>
+                            12 : Sqmm<br/>
+                            13 : Sqcm<br/>
+                            14 : Sqdm<br/>
+                            15 : Sqm<br/>
+                            16 : Cbmm<br/>
+                            17 : Cbcm<br/>
+                            18 : Cbdm<br/>
+                            19 : Cbm<br/>
+                            20 : Pc<br/>
+                            21 : Yard<br/>
+                            22 : Oz<br/>
+                            23 : Lbs<br/>
+                            24 : Floz<br/>
+                            25 : Gal<br/>
+                            26 : Inch<br/>
+                            27 : Foot<br/>
+                            28 : Pound<br/>
+                            29 : Ton
+          format: int32
+          nullable: true
+        minimumPurchaseQuantity:
+          type: number
+          description: The minimum purchase
+          format: double
+          nullable: true
+        purchaseQuantity:
+          type: number
+          description: The acceptance interval
+          format: double
+          nullable: true
+        condition:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          type: integer
+          description: |-
+            The condition of a product.<br/>
+                                            Value:<br/>
+                                            0 : New<br/>
+                                            1 : AsNew<br/>
+                                            2 : VeryGood<br/>
+                                            3 : Good<br/>
+                                            4 : Acceptable<br/>
+                                            5 : Antique<br/>
+                                            6 : Broken<br/>
+                                            7 : Refurbished<br/>
+                                            8 : BStock<br/>
+                                            9 : DamagedPackaging<br/>
+                                            10 : Demo<br/>
+                                            11 : AccordingToDescription<br/>
+                                            12 : Incomplete<br/>
+                                            13 : Unknown<br/>
+          format: int32
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        productStatus:
+          type: string
+          description: The status of product
+          nullable: true
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_productDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/productDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    patchUpdateDto:
+      required:
+        - op
+        - path
+        - value
+      type: object
+      properties:
+        op:
+          minLength: 1
+          type: string
+          description: The patch operations supported by JSON Patch are add, remove, replace, move, copy and test
+        path:
+          minLength: 1
+          type: string
+          description: Path to the Op object
+        value:
+          minLength: 1
+          type: string
+          description: Value of Op object
+    getByIdsBodyResponseDto_productDetailDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/productDetailDto'
+        messages:
+          type: array
+          items:
+            type: string
+    getByIdsResponseDto_productDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/getByIdsBodyResponseDto_productDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    shippingClassificationDetailDto:
+      required:
+        - title
+      type: object
+      properties:
+        shippingClassificationId:
+          type: string
+        id:
+          type: string
+          description: The generated by Qilin when creating a new shipping classification.
+        updatedDate:
+          type: string
+          description: The latest update time of this shipping classification.
+          format: date-time
+        sourceId:
+          type: string
+          description: The Id of input channel, where data goes from.
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the shipping class
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_shippingClassificationDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/shippingClassificationDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    createShippingClassificationDto:
+      required:
+        - sourceId
+        - title
+      type: object
+      properties:
+        shippingClassificationId:
+          type: string
+        sourceId:
+          minLength: 1
+          type: string
+          description: The Id of input channel, where data goes from.
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the shipping class
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_shippingClassificationDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/shippingClassificationDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    shippingClassificationDto:
+      required:
+        - title
+      type: object
+      properties:
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the shipping class
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    getByIdsBodyResponseDto_shippingClassificationDetailDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/shippingClassificationDetailDto'
+        messages:
+          type: array
+          items:
+            type: string
+    getByIdsResponseDto_shippingClassificationDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/getByIdsBodyResponseDto_shippingClassificationDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    variationDetailDto:
+      required:
+        - value
+        - variationKeyId
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new variation.
+        updatedDate:
+          type: string
+          description: The latest update time of this variation.
+          format: date-time
+        variationId:
+          type: string
+          description: The externalId defined outside Qilin
+        sourceId:
+          type: string
+          description: The Id of input channel, where data goes from.
+        value:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The value of the variation, e.g. "red"'
+        variationKeyId:
+          minLength: 1
+          type: string
+          description: Reference to a UUID of a pier API created VariationKey
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the variation
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    getByIdsBodyResponseDto_variationDetailDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/variationDetailDto'
+        messages:
+          type: array
+          items:
+            type: string
+    getByIdsResponseDto_variationDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/getByIdsBodyResponseDto_variationDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    variationKeyDetailDto:
+      required:
+        - value
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new variation.
+        updatedDate:
+          type: string
+          description: The latest update time of this variation.
+          format: date-time
+        variationKeyId:
+          type: string
+          description: The externalId defined outside Qilin
+        sourceId:
+          type: string
+          description: The Id of input channel, where data goes from.
+        value:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The value of the VariationKey, e.g. "color"'
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the variation key
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_variationKeyDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/variationKeyDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    variationKeyDto:
+      required:
+        - value
+      type: object
+      properties:
+        value:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The value of the VariationKey, e.g. "color"'
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the variation key
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_variationKeyDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/variationKeyDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    successResponse_variationKeyDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/variationKeyDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    getByIdsBodyResponseDto_variationKeyDetailDto:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/variationKeyDetailDto'
+        messages:
+          type: array
+          items:
+            type: string
+    getByIdsResponseDto_variationKeyDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/getByIdsBodyResponseDto_variationKeyDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    variationDto:
+      required:
+        - value
+        - variationKeyId
+      type: object
+      properties:
+        value:
+          type: object
+          additionalProperties:
+            type: string
+          description: ' The value of the variation, e.g. "red"'
+        variationKeyId:
+          minLength: 1
+          type: string
+          description: Reference to a UUID of a pier API created VariationKey
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: Description of the variation
+        order:
+          type: integer
+          description: The sorting, the lower the value, the further up
+          format: int32
+          nullable: true
+        mediaUrls:
+          type: array
+          items:
+            type: string
+          description: A list of file URLs (image, mp3, mp4, etc)
+          nullable: true
+        flexibleAttributes:
+          type: object
+          additionalProperties:
+            type: object
+          description: Custom attributes are defined by user
+        seoTitle:
+          type: object
+          additionalProperties:
+            type: string
+        seoKeywords:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/iEnumerable_string'
+        seoDescription:
+          type: object
+          additionalProperties:
+            type: string
+        updatedDateExternal:
+          type: string
+          format: date-time
+          nullable: true
+        hashValue:
+          type: string
+    successResponse_variationDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/variationDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    attributeDetailDto:
+      required:
+        - title
+        - dataType
+        - sourceId
+      type: object
+      properties:
+        id:
+          type: string
+          description: The generated by Qilin when creating a new attribute.
+        updatedDate:
+          type: string
+          description: The latest update time of this attribute.
+          format: date-time
+        dateTypeName:
+          type: string
+          description: The data type of the attribute
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the attribute
+        dataType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+          type: integer
+          description: "The data type of the attribute<br/>\n\t\t\t\tValue:<br/>\n\t\t\t\t0 : String<br/>\n\t\t\t\t1 : Char<br/>\n\t\t\t\t2 : Long<br/>\n\t\t\t\t3 : Double<br/>\n\t\t\t\t4 : Bool<br/>\n\t\t\t\t5 : Datetime<br/>\n\t\t\t\t6 : Byte<br/>\n\t\t\t\t7 : Object"
+          format: int32
+        validation:
+          type: string
+          description: A regex can be specified here, which we use to validate the value for the attribute
+          nullable: true
+        presetValues:
+          type: array
+          items:
+            type: object
+          description: Values can be specified here. An attribute may then only have one value defined in this list.
+          nullable: true
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: A description of this attribute so that the merchant can better understand what is meant by this. eg "Material composition, please note this and that"
+        usageFor:
+          type: object
+          additionalProperties:
+            type: string
+          description: A description of what this attribute will be effective for e.g. "LEGAL REQUIREMENTS"
+        group:
+          type: object
+          additionalProperties:
+            type: string
+          description: The group of the attribute, e.g. "Product Details"
+        isMultiValue:
+          type: boolean
+          description: Controls whether this attribute can have multiple values.
+          default: false
+          nullable: true
+        relevance:
+          type: integer
+          description: ' A value indicating how important this attribute is. 0 = not important, 10 = very important'
+          format: int32
+          nullable: true
+        sourceId:
+          minLength: 1
+          type: string
+          description: The Id of input channel, where data goes from.
+    successResponse_attributeDetailDto[]:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          type: array
+          items:
+            $ref: '#/components/schemas/attributeDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
+    attributeDto:
+      required:
+        - title
+        - dataType
+        - sourceId
+      type: object
+      properties:
+        title:
+          type: object
+          additionalProperties:
+            type: string
+          description: The name of the attribute
+        dataType:
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+          type: integer
+          description: "The data type of the attribute<br/>\n\t\t\t\tValue:<br/>\n\t\t\t\t0 : String<br/>\n\t\t\t\t1 : Char<br/>\n\t\t\t\t2 : Long<br/>\n\t\t\t\t3 : Double<br/>\n\t\t\t\t4 : Bool<br/>\n\t\t\t\t5 : Datetime<br/>\n\t\t\t\t6 : Byte<br/>\n\t\t\t\t7 : Object"
+          format: int32
+        validation:
+          type: string
+          description: A regex can be specified here, which we use to validate the value for the attribute
+          nullable: true
+        presetValues:
+          type: array
+          items:
+            type: object
+          description: Values can be specified here. An attribute may then only have one value defined in this list.
+          nullable: true
+        description:
+          type: object
+          additionalProperties:
+            type: string
+          description: A description of this attribute so that the merchant can better understand what is meant by this. eg "Material composition, please note this and that"
+        usageFor:
+          type: object
+          additionalProperties:
+            type: string
+          description: A description of what this attribute will be effective for e.g. "LEGAL REQUIREMENTS"
+        group:
+          type: object
+          additionalProperties:
+            type: string
+          description: The group of the attribute, e.g. "Product Details"
+        isMultiValue:
+          type: boolean
+          description: Controls whether this attribute can have multiple values.
+          default: false
+          nullable: true
+        relevance:
+          type: integer
+          description: ' A value indicating how important this attribute is. 0 = not important, 10 = very important'
+          format: int32
+          nullable: true
+        sourceId:
+          minLength: 1
+          type: string
+          description: The Id of input channel, where data goes from.
+    successResponse_attributeDetailDto:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        resultTime:
+          type: string
+          format: date-time
+        body:
+          $ref: '#/components/schemas/attributeDetailDto'
+        pagination:
+          $ref: '#/components/schemas/pagination'
