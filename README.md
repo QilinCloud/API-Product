@@ -25,6 +25,7 @@ Some examples are:
 - positive tests / negative tests / destructive tests in aware of false positive results / false negative results
 - Sonarcloud
 
+Read more about our code quality approach in our wiki: [Code Quality](https://github.com/QilinCloud/QilinCloud/wiki/Code-quality).
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=marcossoftware_Qilin.Core.Product&token=9eb8f94c11682386f918918a038c2f0aaf6cbd80)](https://sonarcloud.io/summary/new_code?id=marcossoftware_Qilin.Core.Product)
 
